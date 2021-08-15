@@ -4,22 +4,26 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.security.cert.Extension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class Activity5 extends AppCompatActivity {
+public class MainLogic extends AppCompatActivity {
     public static final String EXTRA_SCORE = "extraScore";
 
     private static final String KEY_SCORE = "keyScore";
@@ -32,6 +36,7 @@ public class Activity5 extends AppCompatActivity {
     private TextView textViewQuestion;
     private TextView textViewScore;
     private TextView textViewQuestionCount;
+    private TextView textViewExplanation;
 
     private ViewGroup layout2;
 
@@ -57,7 +62,7 @@ public class Activity5 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_5);
+        setContentView(R.layout.main_logic);
         toolbar5 = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar5);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -65,6 +70,8 @@ public class Activity5 extends AppCompatActivity {
         textViewQuestion = findViewById(R.id.text_view_question);
         textViewScore = findViewById(R.id.text_view_high_score5);
         textViewQuestionCount = findViewById(R.id.text_view_question_count);
+        textViewExplanation = findViewById(R.id.explanation_text);
+        textViewExplanation.setMovementMethod(new ScrollingMovementMethod());
 
         option1 = findViewById(R.id.button_1);
         option2 = findViewById(R.id.button_2);
@@ -75,14 +82,60 @@ public class Activity5 extends AppCompatActivity {
 
         textColorDefault = option1.getTextColors();
 
+        Intent intent = getIntent();
+
         if (savedInstanceState == null) {
             QuizDbHelper dbHelper = new QuizDbHelper(this);
-            questionList = dbHelper.getQuestions("Hard");
+        }
 
-            questionCountTotal = questionList.size();
-            Collections.shuffle(questionList);
+        if (savedInstanceState == null) {
+            QuizDbHelper dbHelper = new QuizDbHelper(this);
+            switch (intent.getStringExtra("difficulty")) {
+                case Question.DIFFICULTY_EASY:
+                    questionList = dbHelper.getQuestions(1, "Easy");
 
-            showNextQuestion();
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+                case Question.DIFFICULTY_MEDIUM:
+                    questionList = dbHelper.getQuestions(1, "Medium");
+
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+                case Question.DIFFICULTY_HARD:
+                    questionList = dbHelper.getQuestions(1, "Hard");
+
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+                case Question.DIFFICULTY_VERB_GET:
+                    questionList = dbHelper.getQuestions(1, "Verb_get");
+
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+                case Question.DIFFICULTY_VERB_MAKE:
+                    questionList = dbHelper.getQuestions(1, "Verb_make");
+
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+                case Question.DIFFICULTY_VERB_TAKE:
+                    questionList = dbHelper.getQuestions(1, "Verb_take");
+
+                    questionCountTotal = questionList.size();
+                    Collections.shuffle(questionList);
+                    showNextQuestion();
+                    break;
+            }
+
+
         } else {
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
             questionCountTotal = questionList.size();
@@ -96,7 +149,7 @@ public class Activity5 extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (!answered) {
-                    Toast.makeText(Activity5.this, "Please, select an answer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainLogic.this, "Please, select an answer", Toast.LENGTH_SHORT).show();
                 } else {
                     showNextQuestion();
                 }
@@ -141,6 +194,8 @@ public class Activity5 extends AppCompatActivity {
             answered = false;
             confirm.setText("Next");
 
+            textViewExplanation.setText("");
+
         } else {
             finishQuiz();
         }
@@ -149,25 +204,41 @@ public class Activity5 extends AppCompatActivity {
     public void optionButtonIsPressed(View view) {
         answered = true;
 
+
+        int rightAnswer = view.getId();
+
         switch (view.getId()) {
             case (R.id.button_1):
-                showSolution();
-                break;
             case (R.id.button_2):
-                showSolution();
-                break;
             case (R.id.button_3):
+                if (rightAnswer == currentQuestion.getAnswerNr()){
+                    score++;
+                    textViewScore.setText("Score: " + score);
+                }
                 showSolution();
                 break;
-
-
         }
     }
 
 
 
+    private void startAnimation() {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(1000);
 
-    public void checkAnswer(ViewGroup view) {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setStartOffset(1000);
+        fadeOut.setDuration(1000);
+
+        AnimationSet animation = new AnimationSet(false);
+        animation.addAnimation(fadeIn);
+        animation.addAnimation(fadeOut);
+    }
+
+
+/*    public void checkAnswer(View view) {
         answered = true;
 
         int answerNumber = layout2.indexOfChild(findViewById(R.id.layout_2)) + 1;
@@ -176,7 +247,7 @@ public class Activity5 extends AppCompatActivity {
             score++;
             textViewScore.setText("Score: " + score);
         }
-    }
+    }*/
 
     public void showSolution () {
         option1.setTextColor(Color.RED);
@@ -187,17 +258,26 @@ public class Activity5 extends AppCompatActivity {
             case 1:
                 option1.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer 1 is correct");
-                score++;
+                if (answered) {
+                    startAnimation();
+                    textViewExplanation.setText(currentQuestion.getExplanation());
+                }
                 break;
             case 2:
                 option2.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer 2 is correct");
-                score++;
+                if (answered) {
+                    startAnimation();
+                    textViewExplanation.setText(currentQuestion.getExplanation());
+                }
                 break;
             case 3:
                 option3.setTextColor(Color.GREEN);
                 textViewQuestion.setText("Answer 3 is correct");
-                score++;
+                if (answered) {
+                    startAnimation();
+                    textViewExplanation.setText(currentQuestion.getExplanation());
+                }
                 break;
         }
         if (questionCounter < questionCountTotal) {
@@ -205,13 +285,11 @@ public class Activity5 extends AppCompatActivity {
         }else {
             confirm.setText("Finish");
         }
-
     }
 
 
     private void startNewActivity () {
         Intent intention = new Intent();
-
     }
 
     private void finishQuiz () {

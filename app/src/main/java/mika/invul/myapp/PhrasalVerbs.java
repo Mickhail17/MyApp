@@ -1,13 +1,11 @@
 package mika.invul.myapp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 
 
-public class Activity2 extends AppCompatActivity {
+public class PhrasalVerbs extends AppCompatActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_QUIZ = 1;
 
@@ -26,9 +24,9 @@ public class Activity2 extends AppCompatActivity {
     private TextView textViewHighScore;
     private int highscore;
 
-    private Button buttonPracticeWords;
-    private Button buttonIrregularVerbs;
-    private Button buttonTest;
+    private Button button1;
+    private Button button2;
+    private Button button3;
     private Toolbar toolbar2;
 
 
@@ -39,49 +37,45 @@ public class Activity2 extends AppCompatActivity {
         toolbar2 = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar2);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        buttonPracticeWords = (Button) findViewById(R.id.button_practice_words);
-        buttonPracticeWords.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity3();
-            }
-        });
-        buttonIrregularVerbs = (Button) findViewById(R.id.button_irregular_verbs);
-        buttonIrregularVerbs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity4();
-            }
-        });
 
-        buttonTest = (Button) findViewById(R.id.button_test);
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity5();
-            }
-        });
+        button1 = findViewById(R.id.button_practice_words);
+        button2 = findViewById(R.id.button_irregular_verbs);
+        button3 = findViewById(R.id.button_test);
 
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
 
+    }
 
+    @Override
+    public void onClick(View v) {
+        String difficultyEasy = String.valueOf(button1);
+        String difficultyMedium = String.valueOf(button2);
+        String difficultyHard = String.valueOf(button3);
+        Intent intent = new Intent(PhrasalVerbs.this, MainLogic.class);
+
+        switch(v.getId()) {
+            case R.id.button_practice_words:
+                intent.putExtra("difficulty", Question.DIFFICULTY_VERB_GET);
+                startActivity(intent);
+                break;
+            case R.id.button_irregular_verbs:
+                intent.putExtra("difficulty", Question.DIFFICULTY_VERB_MAKE);
+                startActivity(intent);
+                break;
+            case R.id.button_test:
+                intent.putExtra("difficulty", Question.DIFFICULTY_VERB_TAKE);
+                startActivity(intent);
+                break;
+        }
     }
 
 
 
-    public void openActivity3 (){
-        Intent intent = new Intent(this, Activity3.class);
-        startActivityForResult(intent, REQUEST_CODE_QUIZ);
-    }
 
-    public void openActivity4 (){
-        Intent kek = new Intent (this, Activity4.class);
-        startActivityForResult(kek, REQUEST_CODE_QUIZ);
-    }
 
-    public void openActivity5 () {
-        Intent bruh = new Intent(this, Activity5.class);
-        startActivityForResult(bruh, REQUEST_CODE_QUIZ);
-    }
+
 
 /*    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

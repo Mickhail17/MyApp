@@ -2,8 +2,8 @@
     <string name="welcome1">Choose Your Level</string>
     <string name="welcome2">Choose The Topic</string>
     <string name="welcome3">The Third Activity</string>
-    <string name="intermediate_lvl">Intermediate</string>
-    <string name="upper_intermediate_lvl">Upper-Intermediate</string>
+    <string name="phrasal_verbs">Phrasal Verbs</string>
+    <string name="idioms">Idioms</string>
     <string name="open_activity_3">Practice Words</string>
     <string name="app_name">Vocabulary Quiz</string>
     <string name="item_1">Item 1</string>

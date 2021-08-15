@@ -6,11 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private Button button;
+    private Button button_intermediate;
+    private Button button_upper_intermediate;
     private Toolbar toolbar;
 
 
@@ -30,30 +28,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        button = (Button) findViewById(R.id.button_intermediate);
-        button.setOnClickListener(new View.OnClickListener() {
+        button_intermediate = (Button) findViewById(R.id.button_intermediate);
+        button_intermediate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity2();
+                openActivityPhrasalVerbs();
+            }
+        });
+
+        button_upper_intermediate = (Button) findViewById(R.id.button_upper_intermediate);
+        button_upper_intermediate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityIdioms();
             }
         });
     }
-
-
-    public void openActivity2 () {
-        Intent intent = new Intent(this, Activity2.class);
+    public void openActivityPhrasalVerbs () {
+        Intent intent = new Intent(this, PhrasalVerbs.class);
         startActivity(intent);
     }
 
+    public void openActivityIdioms () {
+        Intent intent = new Intent (this, Idioms.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.example_menu, menu);
         return true;
-
     }
 
 

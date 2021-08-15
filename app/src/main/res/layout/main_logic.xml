@@ -22,6 +22,7 @@
             android:layout_below="@+id/toolbar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
             android:freezesText="true"
             android:text="Questions: 1/x"
             android:textColor="@android:color/black"
@@ -34,6 +35,7 @@
             android:layout_below="@+id/text_view_question_count"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:fontFamily="@font/roboto"
             android:freezesText="true"
             android:text="score: 0"
@@ -45,11 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/layout_2"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="16dp"
             android:text="Here will be the question text\nHere will be the question text\nHere will be the question text"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:freezesText="true"/>
 
         <LinearLayout
@@ -58,12 +61,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <Button
                 android:id="@+id/button_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="option1"
-                android:onClick="optionButtonIsPressed">
+                android:onClick="optionButtonIsPressed"
+                android:background="@drawable/rounded_corners">
+
+
             </Button>
 
             <Button
@@ -71,7 +78,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="option2"
-                android:onClick="optionButtonIsPressed">
+                android:onClick="optionButtonIsPressed"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp">
             </Button>
 
             <Button
@@ -79,7 +88,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="option3"
-                android:onClick="optionButtonIsPressed">
+                android:onClick="optionButtonIsPressed"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp">
             </Button>
         </LinearLayout>
 
@@ -88,8 +99,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="confirm"
-            android:layout_marginTop="50sp">
+            android:layout_marginTop="50sp"
+            android:background="@drawable/rounded_corners">
         </Button>
+
+        <TextView
+            android:id="@+id/explanation_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars = "vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Here will be the explanation\nHere will be the explanation\nHere will be the explanation"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:freezesText="true"/>
 
     </LinearLayout>
 

@@ -33,15 +33,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="250dp"
-                android:text="@string/intermediate_lvl"
-                android:textSize="20sp" />
+                android:text="@string/phrasal_verbs"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corners"/>
 
             <Button
                 android:id="@+id/button_upper_intermediate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/upper_intermediate_lvl"
-                android:textSize="20sp" />
+                android:text="@string/idioms"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".Activity2"
+            android:name=".PhrasalVerbs"
             android:label="Activity Two"
             android:parentActivityName=".MainActivity">
 
@@ -29,23 +29,31 @@
         <activity
             android:name=".Activity3"
             android:label="Activity Three"
-            android:parentActivityName=".Activity2">
+            android:parentActivityName=".PhrasalVerbs">
 
         </activity>
 
         <activity
             android:name=".Activity4"
             android:label="Activity Four"
-            android:parentActivityName=".Activity2">
+            android:parentActivityName=".PhrasalVerbs">
 
         </activity>
 
         <activity
-            android:name=".Activity5"
+            android:name=".MainLogic"
             android:label="Activity Five"
-            android:parentActivityName=".Activity2" >
+            android:parentActivityName=".PhrasalVerbs" >
 
         </activity>
+
+        <activity
+            android:name=".Idioms"
+            android:label="ActivityUpperIntermediate"
+            android:parentActivityName=".MainActivity" >
+
+        </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
